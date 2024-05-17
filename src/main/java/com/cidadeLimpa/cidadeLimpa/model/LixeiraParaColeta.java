@@ -29,8 +29,9 @@ public class LixeiraParaColeta {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_LIXEIRA_PARA_COLETA")
     @SequenceGenerator(name = "SEQ_LIXEIRA_PARA_COLETA", sequenceName = "SEQ_LIXEIRA_PARA_COLETA", allocationSize = 50)
     @Column(name = "id_lixeira_para_coleta")
-    private Long idLixeiraASerColetada;
+    private Long idLixeiraParaColeta;
 
+    @Temporal(TemporalType.DATE)
     @Column(name = "data_solicitacao", nullable = false)
     private Date dataSolicitacao;
 
