@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "tb_lixeira_a_ser_coletada")
+@Table(name = "tb_lixeira_para_coleta")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -26,9 +26,9 @@ import lombok.Setter;
 @EqualsAndHashCode
 public class LixeiraParaColeta {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_LIXEIRA_A_SER_COLETADA")
-    @SequenceGenerator(name = "SEQ_LIXEIRA_A_SER_COLETADA", sequenceName = "SEQ_LIXEIRA_A_SER_COLETADA", allocationSize = 50)
-    @Column(name = "id_lixeira_a_ser_coletada")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_LIXEIRA_PARA_COLETA")
+    @SequenceGenerator(name = "SEQ_LIXEIRA_PARA_COLETA", sequenceName = "SEQ_LIXEIRA_PARA_COLETA", allocationSize = 50)
+    @Column(name = "id_lixeira_para_coleta")
     private Long idLixeiraASerColetada;
 
     @Column(name = "data_solicitacao", nullable = false)
