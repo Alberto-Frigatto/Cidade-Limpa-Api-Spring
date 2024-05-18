@@ -43,9 +43,6 @@ public class Lixeira
     @Column(nullable = false)
     private Integer capacidade;
 
-    @Column(nullable = false)
-    private Integer tipo;
-
     @Column(nullable = false, precision = 3, scale = 2)
     private BigDecimal ocupacao;
 }
