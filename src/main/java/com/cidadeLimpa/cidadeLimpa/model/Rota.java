@@ -37,9 +37,6 @@ public class Rota
     @Column(name = "id_rota")
     private Long idRota;
 
-    @Column(nullable = false, length = 100)
-    private String localizacao;
-
     @Column(name = "horario_inicio", nullable = false, length = 5)
     private String horarioInicio;
 
