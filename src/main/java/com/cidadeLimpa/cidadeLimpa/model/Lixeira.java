@@ -32,7 +32,7 @@ public class Lixeira
     @SequenceGenerator(
             name = "SEQ_LIXEIRA",
             sequenceName = "SEQ_LIXEIRA",
-            allocationSize = 50
+            allocationSize = 1
     )
     @Column(name = "id_lixeira")
     private Long idLixeira;
