@@ -8,6 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.Column;
@@ -41,4 +42,7 @@ public class LixeiraParaColeta {
 
     @Column(nullable = false)
     private Boolean ativo;
+
+    @ManyToOne
+    private Lixeira lixeira;
 }
