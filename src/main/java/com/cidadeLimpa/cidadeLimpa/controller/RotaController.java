@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cidadeLimpa.cidadeLimpa.model.Rota;
+import com.cidadeLimpa.cidadeLimpa.dto.CreateRotaDTO;
+import com.cidadeLimpa.cidadeLimpa.dto.DisplayRotaDTO;
+import com.cidadeLimpa.cidadeLimpa.dto.UpdateRotaDTO;
 import com.cidadeLimpa.cidadeLimpa.service.RotaService;
 
 @RestController
@@ -25,21 +27,21 @@ public class RotaController {
 
     @GetMapping("")
     @ResponseStatus(HttpStatus.OK)
-    public List<Rota> getAllRotas()
+    public List<DisplayRotaDTO> getAllRotas()
     {
         return service.getAllRotas();
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Rota getRotaById(@PathVariable Long id)
+    public DisplayRotaDTO getRotaById(@PathVariable Long id)
     {
         return service.getRotaById(id);
     }
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public Rota createRota(@RequestBody Rota rota)
+    public DisplayRotaDTO createRota(@RequestBody CreateRotaDTO rota)
     {
         return service.createRota(rota);
     }
@@ -53,7 +55,7 @@ public class RotaController {
 
     @PutMapping("")
     @ResponseStatus(HttpStatus.OK)
-    public Rota updateRota(@RequestBody Rota rota)
+    public DisplayRotaDTO updateRota(@RequestBody UpdateRotaDTO rota)
     {
         return service.updateRota(rota);
     }
