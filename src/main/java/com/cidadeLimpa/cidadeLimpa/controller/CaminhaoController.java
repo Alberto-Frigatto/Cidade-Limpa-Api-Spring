@@ -19,6 +19,8 @@ import com.cidadeLimpa.cidadeLimpa.dto.DisplayCaminhaoDTO;
 import com.cidadeLimpa.cidadeLimpa.dto.UpdateCaminhaoDTO;
 import com.cidadeLimpa.cidadeLimpa.service.CaminhaoService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/caminhoes")
 public class CaminhaoController
@@ -42,7 +44,7 @@ public class CaminhaoController
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public DisplayCaminhaoDTO createCaminhao(@RequestBody CreateCaminhaoDTO caminhao)
+    public DisplayCaminhaoDTO createCaminhao(@Valid @RequestBody CreateCaminhaoDTO caminhao)
     {
         return service.createCaminhao(caminhao);
     }
@@ -56,7 +58,7 @@ public class CaminhaoController
 
     @PutMapping("")
     @ResponseStatus(HttpStatus.OK)
-    public DisplayCaminhaoDTO updateCaminhao(@RequestBody UpdateCaminhaoDTO caminhao)
+    public DisplayCaminhaoDTO updateCaminhao(@Valid @RequestBody UpdateCaminhaoDTO caminhao)
     {
         return service.updateCaminhao(caminhao);
     }
