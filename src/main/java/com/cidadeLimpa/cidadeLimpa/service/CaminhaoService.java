@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import com.cidadeLimpa.cidadeLimpa.dto.CreateCaminhaoDTO;
 import com.cidadeLimpa.cidadeLimpa.dto.DisplayCaminhaoDTO;
 import com.cidadeLimpa.cidadeLimpa.dto.UpdateCaminhaoDTO;
+import com.cidadeLimpa.cidadeLimpa.exception.CaminhaoNotFound;
+import com.cidadeLimpa.cidadeLimpa.exception.RotaNotFound;
 import com.cidadeLimpa.cidadeLimpa.model.Caminhao;
 import com.cidadeLimpa.cidadeLimpa.model.Rota;
 import com.cidadeLimpa.cidadeLimpa.repository.CaminhaoRepository;
@@ -38,11 +40,7 @@ public class CaminhaoService
         Optional<Caminhao> caminhao = caminhaoRepository.findById(id);
 
         if (caminhao.isEmpty())
-        {
-            String message = "O caminhão " + id + " não existe";
-
-            throw new RuntimeException(message);
-        }
+            throw new CaminhaoNotFound(id);
 
         return new DisplayCaminhaoDTO(caminhao.get());
     }
@@ -69,11 +67,7 @@ public class CaminhaoService
         Optional<Rota> rota = rotaRepository.findById(id);
 
         if (rota.isEmpty())
-        {
-            String message = "A rota " + id + " não existe";
-
-            throw new RuntimeException(message);
-        }
+            throw new RotaNotFound(id);
 
         return rota.get();
     }
