@@ -19,6 +19,8 @@ import com.cidadeLimpa.cidadeLimpa.dto.DisplayRotaDTO;
 import com.cidadeLimpa.cidadeLimpa.dto.UpdateRotaDTO;
 import com.cidadeLimpa.cidadeLimpa.service.RotaService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/rotas")
 public class RotaController {
@@ -41,7 +43,7 @@ public class RotaController {
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public DisplayRotaDTO createRota(@RequestBody CreateRotaDTO rota)
+    public DisplayRotaDTO createRota(@Valid @RequestBody CreateRotaDTO rota)
     {
         return service.createRota(rota);
     }
@@ -55,7 +57,7 @@ public class RotaController {
 
     @PutMapping("")
     @ResponseStatus(HttpStatus.OK)
-    public DisplayRotaDTO updateRota(@RequestBody UpdateRotaDTO rota)
+    public DisplayRotaDTO updateRota(@Valid @RequestBody UpdateRotaDTO rota)
     {
         return service.updateRota(rota);
     }
