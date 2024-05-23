@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.cidadeLimpa.cidadeLimpa.dto.CreateRotaDTO;
 import com.cidadeLimpa.cidadeLimpa.dto.DisplayRotaDTO;
 import com.cidadeLimpa.cidadeLimpa.dto.UpdateRotaDTO;
+import com.cidadeLimpa.cidadeLimpa.exception.RotaNotFound;
 import com.cidadeLimpa.cidadeLimpa.model.Rota;
 import com.cidadeLimpa.cidadeLimpa.repository.RotaRepository;
 
@@ -60,6 +61,8 @@ public class RotaService {
 
     public DisplayRotaDTO updateRota(UpdateRotaDTO updateRotaDTO)
     {
+        this.getRotaById(updateRotaDTO.idRota());
+
         Rota rota = new Rota();
 
         BeanUtils.copyProperties(updateRotaDTO, rota);
