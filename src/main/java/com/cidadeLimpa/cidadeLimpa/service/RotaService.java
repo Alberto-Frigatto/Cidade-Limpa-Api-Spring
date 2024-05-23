@@ -32,11 +32,7 @@ public class RotaService {
         Optional<Rota> rota = repository.findById(id);
 
         if (rota.isEmpty())
-        {
-            String message = "A rota " + id + " não existe";
-
-            throw new RuntimeException(message);
-        }
+            throw new RotaNotFound(id);
 
         return new DisplayRotaDTO(rota.get());
     }
