@@ -7,11 +7,14 @@ import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.cidadeLimpa.cidadeLimpa.dto.CreateLixeiraParaColetaDTO;
 import com.cidadeLimpa.cidadeLimpa.dto.DIsplayLixeiraParaColetaDTO;
 import com.cidadeLimpa.cidadeLimpa.dto.UpdateLixeiraParaColetaDTO;
+import com.cidadeLimpa.cidadeLimpa.exception.LixeiraParaColetaNotFound;
 import com.cidadeLimpa.cidadeLimpa.model.Lixeira;
 import com.cidadeLimpa.cidadeLimpa.model.LixeiraParaColeta;
 import com.cidadeLimpa.cidadeLimpa.repository.LixeiraParaColetaRepository;
@@ -25,13 +28,11 @@ public class LixeiraParaColetaService {
     @Autowired
     private LixeiraRepository lixeiraRepository;
 
-    public List<DIsplayLixeiraParaColetaDTO> getAllLixeirasParaColeta()
+    public Page<DIsplayLixeiraParaColetaDTO> getAllLixeirasParaColeta(Pageable pagination)
     {
         return lixeiraParaColetaRepository
-                    .findAll()
-                    .stream()
-                    .map(DIsplayLixeiraParaColetaDTO::new)
-                    .toList();
+                    .findAll(pagination)
+                    .map(lixeira -> new DIsplayLixeiraParaColetaDTO(lixeira));
     }
 
     public DIsplayLixeiraParaColetaDTO getLixeiraParaColetaById(Long id)
@@ -39,11 +40,7 @@ public class LixeiraParaColetaService {
         Optional<LixeiraParaColeta> lixeiraParaColeta = lixeiraParaColetaRepository.findById(id);
 
         if (lixeiraParaColeta.isEmpty())
-        {
-            String message = "A lixeira para coleta " + id + " não existe";
-
-            throw new RuntimeException(message);
-        }
+            throw new LixeiraParaColetaNotFound(id);
 
         return new DIsplayLixeiraParaColetaDTO(lixeiraParaColeta.get());
     }
@@ -108,5 +105,23 @@ public class LixeiraParaColetaService {
         LixeiraParaColeta lixeiraParaColetaSalva = lixeiraParaColetaRepository.save(lixeiraParaColeta);
 
         return new DIsplayLixeiraParaColetaDTO(lixeiraParaColetaSalva);
+    }
+
+    public List<DIsplayLixeiraParaColetaDTO> searchLixeiraParaColetaByAtivo(boolean ativo)
+    {
+        return lixeiraParaColetaRepository
+                    .findByAtivo(ativo)
+                    .stream()
+                    .map(DIsplayLixeiraParaColetaDTO::new)
+                    .toList();
+    }
+
+    public List<DIsplayLixeiraParaColetaDTO> searchLixeiraParaColetaByIdLixeira(Long idLixeira)
+    {
+        return lixeiraParaColetaRepository
+                    .findByIdLixeira(idLixeira)
+                    .stream()
+                    .map(DIsplayLixeiraParaColetaDTO::new)
+                    .toList();
     }
 }
