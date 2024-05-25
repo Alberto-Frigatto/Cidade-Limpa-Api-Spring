@@ -1,11 +1,18 @@
 package com.cidadeLimpa.cidadeLimpa.service;
 
-import java.util.List;
 import java.util.Optional;
 
+
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.cidadeLimpa.cidadeLimpa.dto.CreateRotaDTO;
+import com.cidadeLimpa.cidadeLimpa.dto.DisplayRotaDTO;
+import com.cidadeLimpa.cidadeLimpa.dto.UpdateRotaDTO;
+import com.cidadeLimpa.cidadeLimpa.exception.RotaNotFound;
 import com.cidadeLimpa.cidadeLimpa.model.Rota;
 import com.cidadeLimpa.cidadeLimpa.repository.RotaRepository;
 
@@ -14,41 +21,54 @@ public class RotaService {
     @Autowired
     private RotaRepository repository;
 
-    public List<Rota> getAllRotas()
+    public Page<DisplayRotaDTO> getAllRotas(Pageable pagination)
     {
-        return repository.findAll();
+        return repository
+                    .findAll(pagination)
+                    .map(rota -> new DisplayRotaDTO(rota));
     }
 
-    public Rota getRotaById(Long id)
+    public DisplayRotaDTO getRotaById(Long id)
     {
         Optional<Rota> rota = repository.findById(id);
 
         if (rota.isEmpty())
-        {
-            String message = "A rota " + id + " não existe";
+            throw new RotaNotFound(id);
 
-            throw new RuntimeException(message);
-        }
-
-        return rota.get();
+        return new DisplayRotaDTO(rota.get());
     }
 
-    public Rota createRota(Rota rota)
+    public DisplayRotaDTO createRota(CreateRotaDTO createRotaDTO)
     {
-        return repository.save(rota);
+        Rota rota = new Rota();
+
+        BeanUtils.copyProperties(createRotaDTO, rota);
+
+        Rota rotaSalva = repository.save(rota);
+
+        return new DisplayRotaDTO(rotaSalva);
     }
 
     public void deleteRota(Long id)
     {
-        Rota rota = this.getRotaById(id);
+        DisplayRotaDTO rotaDTO = this.getRotaById(id);
+        Rota rota = new Rota();
+
+        BeanUtils.copyProperties(rotaDTO, rota);
 
         repository.delete(rota);
     }
 
-    public Rota updateRota(Rota rota)
+    public DisplayRotaDTO updateRota(UpdateRotaDTO updateRotaDTO)
     {
-        this.getRotaById(rota.getIdRota());
+        this.getRotaById(updateRotaDTO.idRota());
 
-        return repository.save(rota);
+        Rota rota = new Rota();
+
+        BeanUtils.copyProperties(updateRotaDTO, rota);
+
+        Rota rotaSalva = repository.save(rota);
+
+        return new DisplayRotaDTO(rotaSalva);
     }
 }

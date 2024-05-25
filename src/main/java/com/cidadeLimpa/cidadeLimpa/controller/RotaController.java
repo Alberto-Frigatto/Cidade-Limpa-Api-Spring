@@ -1,8 +1,8 @@
 package com.cidadeLimpa.cidadeLimpa.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,8 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cidadeLimpa.cidadeLimpa.model.Rota;
+import com.cidadeLimpa.cidadeLimpa.dto.CreateRotaDTO;
+import com.cidadeLimpa.cidadeLimpa.dto.DisplayRotaDTO;
+import com.cidadeLimpa.cidadeLimpa.dto.UpdateRotaDTO;
 import com.cidadeLimpa.cidadeLimpa.service.RotaService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/rotas")
@@ -25,21 +29,21 @@ public class RotaController {
 
     @GetMapping("")
     @ResponseStatus(HttpStatus.OK)
-    public List<Rota> getAllRotas()
+    public Page<DisplayRotaDTO> getAllRotas(Pageable pagination)
     {
-        return service.getAllRotas();
+        return service.getAllRotas(pagination);
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Rota getRotaById(@PathVariable Long id)
+    public DisplayRotaDTO getRotaById(@PathVariable Long id)
     {
         return service.getRotaById(id);
     }
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public Rota createRota(@RequestBody Rota rota)
+    public DisplayRotaDTO createRota(@Valid @RequestBody CreateRotaDTO rota)
     {
         return service.createRota(rota);
     }
@@ -53,7 +57,7 @@ public class RotaController {
 
     @PutMapping("")
     @ResponseStatus(HttpStatus.OK)
-    public Rota updateRota(@RequestBody Rota rota)
+    public DisplayRotaDTO updateRota(@Valid @RequestBody UpdateRotaDTO rota)
     {
         return service.updateRota(rota);
     }

@@ -1,12 +1,11 @@
 package com.cidadeLimpa.cidadeLimpa.model;
 
-import java.util.ArrayList;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -16,33 +15,36 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "tb_rota")
+@Table(name = "tb_caminhao")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public class Rota
+public class Caminhao
 {
     @Id
     @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "SEQ_ROTA"
+        strategy = GenerationType.SEQUENCE,
+        generator = "SEQ_CAMINHAO"
     )
     @SequenceGenerator(
-            name = "SEQ_ROTA",
-            sequenceName = "SEQ_ROTA",
-            allocationSize = 50
+        name = "SEQ_ROTA",
+        sequenceName = "SEQ_ROTA",
+        allocationSize = 50
     )
-    @Column(name = "id_rota")
-    private Long idRota;
+    @Column(name = "id_caminhao")
+    private Long idCaminhao;
 
-    @Column(name = "horario_inicio", nullable = false, length = 5)
-    private String horarioInicio;
+    @Column(nullable = false, length = 50)
+    private String modelo;
 
-    @Column(name = "horario_fim", nullable = false, length = 5)
-    private String horarioFim;
+    @Column(nullable = false)
+    private Integer capacidade;
 
-    @Column(name = "lista_pontos_coleta", nullable = false)
-    private ArrayList<String> listaPontosColeta;
+    @Column(nullable = false, length = 7)
+    private String placa;
+
+    @ManyToOne
+    private Rota rota;
 }
