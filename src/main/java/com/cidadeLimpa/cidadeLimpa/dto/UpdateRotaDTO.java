@@ -18,7 +18,6 @@ public record UpdateRotaDTO(
     @NotEmpty(message = "A lista de pontos de coleta da rota é obrigatória")
     ArrayList<String> listaPontosColeta,
 
-    @NotBlank(message = "O id da rota é obrigatório")
     Long idRota
 ) {
 }
