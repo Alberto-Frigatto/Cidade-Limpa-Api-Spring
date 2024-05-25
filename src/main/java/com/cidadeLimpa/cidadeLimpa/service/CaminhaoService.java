@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.cidadeLimpa.cidadeLimpa.dto.CreateCaminhaoDTO;
@@ -26,13 +28,11 @@ public class CaminhaoService
     @Autowired
     private RotaRepository rotaRepository;
 
-    public List<DisplayCaminhaoDTO> getAllCaminhoes()
+    public Page<DisplayCaminhaoDTO> getAllCaminhoes(Pageable pagination)
     {
         return caminhaoRepository
-                    .findAll()
-                    .stream()
-                    .map(DisplayCaminhaoDTO::new)
-                    .toList();
+                    .findAll(pagination)
+                    .map(caminhao -> new DisplayCaminhaoDTO(caminhao));
     }
 
     public DisplayCaminhaoDTO getCaminhaoById(Long id)
@@ -96,5 +96,41 @@ public class CaminhaoService
         Caminhao caminhaoSalvo = caminhaoRepository.save(caminhao);
 
         return new DisplayCaminhaoDTO(caminhaoSalvo);
+    }
+
+    public List<DisplayCaminhaoDTO> searchCaminhaoByModelo(String modelo)
+    {
+        return caminhaoRepository
+                    .findByModelo("%" + modelo + "%")
+                    .stream()
+                    .map(DisplayCaminhaoDTO::new)
+                    .toList();
+    }
+
+    public List<DisplayCaminhaoDTO> searchCaminhaoByCapacidade(Integer minCapacidade, Integer maxCapacidade)
+    {
+        return caminhaoRepository
+                    .findByCapacidade(minCapacidade, maxCapacidade)
+                    .stream()
+                    .map(DisplayCaminhaoDTO::new)
+                    .toList();
+    }
+
+    public List<DisplayCaminhaoDTO> searchCaminhaoByIdRota(Long idRota)
+    {
+        return caminhaoRepository
+                    .findByIdRota(idRota)
+                    .stream()
+                    .map(DisplayCaminhaoDTO::new)
+                    .toList();
+    }
+
+    public List<DisplayCaminhaoDTO> searchCaminhaoByPlaca(String placa)
+    {
+        return caminhaoRepository
+                    .findByPlaca(placa)
+                    .stream()
+                    .map(DisplayCaminhaoDTO::new)
+                    .toList();
     }
 }
