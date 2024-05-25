@@ -1,10 +1,12 @@
 package com.cidadeLimpa.cidadeLimpa.service;
 
-import java.util.List;
 import java.util.Optional;
+
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.cidadeLimpa.cidadeLimpa.dto.CreateRotaDTO;
@@ -19,13 +21,11 @@ public class RotaService {
     @Autowired
     private RotaRepository repository;
 
-    public List<DisplayRotaDTO> getAllRotas()
+    public Page<DisplayRotaDTO> getAllRotas(Pageable pagination)
     {
         return repository
-                    .findAll()
-                    .stream()
-                    .map(DisplayRotaDTO::new)
-                    .toList();
+                    .findAll(pagination)
+                    .map(rota -> new DisplayRotaDTO(rota));
     }
 
     public DisplayRotaDTO getRotaById(Long id)
