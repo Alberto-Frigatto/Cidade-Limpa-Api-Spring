@@ -29,10 +29,36 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                     .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                     .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
+
                     .requestMatchers(HttpMethod.POST, "/lixeirasParaColeta").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.DELETE, "/lixeirasParaColeta/*").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.PUT, "/lixeirasParaColeta").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.GET, "/lixeirasParaColeta").hasAnyRole("ADMIN", "USER")
+                    .requestMatchers(HttpMethod.GET, "/lixeirasParaColeta/*").hasAnyRole("ADMIN", "USER")
+
+                    .requestMatchers(HttpMethod.POST, "/lixeiras").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.DELETE, "/lixeiras/*").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.PUT, "/lixeiras").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.GET, "/lixeiras").hasAnyRole("ADMIN", "USER")
+                    .requestMatchers(HttpMethod.GET, "/lixeiras/*").hasAnyRole("ADMIN", "USER")
+
+                    .requestMatchers(HttpMethod.POST, "/rotas").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.DELETE, "/rotas/*").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.PUT, "/rotas").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.GET, "/rotas").hasAnyRole("ADMIN", "USER")
+                    .requestMatchers(HttpMethod.GET, "/rotas/*").hasAnyRole("ADMIN", "USER")
+
+                    .requestMatchers(HttpMethod.POST, "/caminhoes").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.DELETE, "/caminhoes/*").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.PUT, "/caminhoes").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.GET, "/caminhoes").hasAnyRole("ADMIN", "USER")
+                    .requestMatchers(HttpMethod.GET, "/caminhoes/*").hasAnyRole("ADMIN", "USER")
+
+                    .requestMatchers(HttpMethod.POST, "/coletas").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.DELETE, "/coletas/*").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.GET, "/coletas").hasAnyRole("ADMIN", "USER")
+                    .requestMatchers(HttpMethod.GET, "/coletas/*").hasAnyRole("ADMIN", "USER")
+
                     .anyRequest().authenticated()
                 )
                 .addFilterBefore(
