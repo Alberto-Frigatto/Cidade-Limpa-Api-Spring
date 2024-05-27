@@ -1,5 +1,7 @@
 package com.cidadeLimpa.cidadeLimpa.dto;
 
+import com.cidadeLimpa.cidadeLimpa.model.UsuarioRole;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -13,8 +15,7 @@ public record CreateUsuarioDTO(
     @Size(min = 8, message = "A senha do usuário deve ter pelo menos 8 caracteres")
     String senha,
 
-    @NotBlank(message = "A role do usuário é obrigatória")
-    String role
+    UsuarioRole role
 ) {
 
 }
