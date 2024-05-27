@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.cidadeLimpa.cidadeLimpa.dto.CreateLixeiraParaColetaDTO;
 import com.cidadeLimpa.cidadeLimpa.dto.DIsplayLixeiraParaColetaDTO;
 import com.cidadeLimpa.cidadeLimpa.dto.UpdateLixeiraParaColetaDTO;
+import com.cidadeLimpa.cidadeLimpa.exception.LixeiraNotFound;
 import com.cidadeLimpa.cidadeLimpa.exception.LixeiraParaColetaNotFound;
 import com.cidadeLimpa.cidadeLimpa.model.Lixeira;
 import com.cidadeLimpa.cidadeLimpa.model.LixeiraParaColeta;
@@ -74,11 +75,7 @@ public class LixeiraParaColetaService {
         Optional<Lixeira> lixeira = lixeiraRepository.findById(id);
 
         if (lixeira.isEmpty())
-        {
-            String message = "A lixeira " + id + " não existe";
-
-            throw new RuntimeException(message);
-        }
+            throw new LixeiraNotFound(id);
 
         return lixeira.get();
     }
