@@ -84,7 +84,10 @@ public class CaminhaoService
 
     public DisplayCaminhaoDTO updateCaminhao(UpdateCaminhaoDTO updateCaminhaoDTO)
     {
+        DisplayCaminhaoDTO caminhaoDTO = this.getCaminhaoById(updateCaminhaoDTO.idCaminhao());
         Caminhao caminhao = new Caminhao();
+
+        BeanUtils.copyProperties(caminhaoDTO, caminhao);
 
         Rota rota = this.getRotaById(updateCaminhaoDTO.idRota());
 
